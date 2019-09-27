@@ -143,10 +143,17 @@
 						<label for="userid">会员账号</label>
 						<input type="text" name="userid" id="userid" value="" placeholder="必填" >
 					</div>
-
+					<div id="qq_div" style="display:none;">
+					</div>
+					<div id="creat_at_div" style="display:none;">
+						<div class="item">
+							<label for="creat_at">注册日期</label>
+							<input type="text" name="creat_at" id="creat_at" value="" placeholder="必填">
+						</div>
+					</div>
 					<div class="btns">
 						<button type="button" id="login_btn" class="send_btn" onclick="showLoginPop()">@if($member)登出@else登录@endif</button>
-						<button type="button" id="check_btn" class="check_btn <?php if(!$member){echo'notwork';} ?>">查询</button>
+						<button type="button" id="check_btn" class="check_btn <?php if(!$member){echo'notwork';} ?>" onclick="search()">查询</button>
 					</div>
 				</form>
 
@@ -186,11 +193,11 @@
 							if (res.error == -1) {
 								alert("登出成功.");
 								document.getElementById("login_btn").textContent='登录';
+								document.getElementById('userid').value = '';
 								document.getElementById("check_btn").classList.add("notwork");
+								document.getElementById('qq_div').style.display = 'none';
+								document.getElementById('creat_at_div').style.display = 'none';
 								// 會員已登入
-							} else if (res.error == 100) {
-								alert("您已经登入, 页面将重新整理.");
-								location.reload();
 							} else if (res.msg) {
 								alert(res.msg);
 							} else {
@@ -205,7 +212,56 @@
 				document.getElementById('login').style.display = 'block';
 			}
 		}
-		
+		function search(){
+			
+			//check search btn can work
+			var status = document.getElementById("check_btn").classList.contains('notwork');
+			if(!status){
+				var username = document.getElementById('userid').value;
+				var checkIsnull = isNull(username);
+				if(!checkIsnull){
+					$.ajax({
+						type: 'get',
+						url: '/search',
+						dataType: 'json',
+						data: { username },
+						success: function(res){
+							if (res.error == -1) {
+								var tag = document.getElementById('qq_div');
+								tag.innerHTML = "";
+								res.data.qqnumber.forEach(function(element) {
+									var div = document.createElement("div");
+									div.setAttribute("class", "item");
+									var label = document.createElement("label");
+									label.textContent = 'QQ号码';
+									var input = document.createElement("input");
+									input.setAttribute ("type", "text");
+									input.setAttribute ("placeholder", "必填");
+									input.value = element.qq_number;
+									div.appendChild(label);
+									div.appendChild(input);
+									tag.appendChild(div);
+								});
+								document.getElementById('creat_at').value = res.data.registration_date;
+								
+								document.getElementById('qq_div').style.display = 'block';
+								document.getElementById('creat_at_div').style.display = 'block';
+							} else if (res.error == 103) {
+								alert("您未登入, 页面将重新整理.");
+								location.reload();
+							} else if (res.msg) {
+								alert(res.msg);
+							} else {
+								alert("发生未知的错误.");
+								location.reload();
+							}
+						},
+					});
+				}else{
+					alert('请输入要查询帐号');
+				}
+			}
+		}
 		//關閉登入彈窗
 		function closeLoginPop(){
 			document.getElementById('login').style.display = 'none';
@@ -235,11 +291,12 @@
 							alert(res.msg);
 						} else {
 							alert("发生未知的错误.");
+							location.reload();
 						}
 					},
 				});
 			}else{
-				alert('查询账号不能全为空');
+				alert('查询账号不能为空');
 			}
 		}
 		
