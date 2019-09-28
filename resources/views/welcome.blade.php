@@ -11,19 +11,14 @@
 	<link rel="stylesheet" href="css/regular.min.css">
 	<link rel="stylesheet" href="css/solid.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<title>金沙赌场-在线客户支持</title>
+	<title>金沙赌场-提交QQ专用资料</title>
 </head>
 <body>
 
 	<div class="wrap">
-		<div class="header">
-			<img src="images/top.jpg" alt="澳门政府支持 博彩界龙头">
-		</div><!-- header END -->
-
-
 		<div class="main">
 			<div class="content">
-				<h1>查询QQ专用资料</h1>
+				<h1>提交QQ专用资料</h1>
 				<form id="survey" action="">
 					<div class="item">
 						<label for="userid">会员账号</label>
