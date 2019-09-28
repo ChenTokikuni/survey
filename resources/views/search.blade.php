@@ -135,9 +135,7 @@
 
 		<div class="main">
 			<div class="content">
-				<h1>客服满意度调查专用通道</h1>
-				<p class="dec">*请填写<span>正确信息</span>以便活动专员为您进行满意度调查，被调查的对象需<b>随机抽查</b>，被抽到的会员<span>需配合</span>回访专员的<span>电话回访</span>，如<span>不能配合</span>或<span>资料错误</span>，视为<span>放弃</span>本项优惠</p>
-
+				<h1>提交QQ专用资料</h1>
 				<form id="survey" action="">
 					<div class="item">
 						<label for="userid">会员账号</label>

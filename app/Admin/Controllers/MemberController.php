@@ -86,10 +86,12 @@ class MemberController extends Controller
 
 		// 關閉選擇器
 		$grid->disableRowSelector();
-		$grid->disableExport();
+		//$grid->disableExport();
 		//$grid->disableActions();
 		//$grid->disableCreateButton();
 		$grid->disableColumnSelector();
+		
+		$grid->exporter(new \App\Admin\Extensions\MemberExporter());
 		//自訂
 		$grid->filter(function($filter){
 			$filter->disableIdFilter();	
