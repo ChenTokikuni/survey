@@ -39,8 +39,18 @@ class IndexController extends Controller
 			}
 			$data_exists = DB::table('member')->Where('account','=',$userid)->Where('qq_number','=',$qq)->exists();
 			if($data_exists){
-				$res['error'] = 107;
-				$res['msg'] = '输入相同资料';
+				$data_check = DB::table('member')->select('registration_date')->Where('account','=',$userid)->Where('qq_number','=',$qq)->get()->toArray();
+				if($data_check['0']->registration_date == $creat_at){
+					$res['error'] = 107;
+					$res['msg'] = '输入相同资料';
+					return response()->json($res);
+				}else{
+					DB::table('member')->Where('account','=',$userid)->Where('qq_number','=',$qq)->update([
+						'registration_date' => $creat_at,
+					]);
+				}
+				$res['error'] = -1;
+				$res['msg'] = 'update';
 				return response()->json($res);
 			}
 			DB::table('member')->insert([

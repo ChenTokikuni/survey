@@ -73,7 +73,11 @@
 					data: { userid , qq , creat_at },
 					success: function(res){console.log(res);
 						if (res.error == -1) {
-							alert("提交成功.");
+							if(res.msg =='update'){
+								alert("更新成功.");
+							}else{
+								alert("提交成功.");
+							}
 							location.reload();
 						} else if (res.msg) {
 							alert(res.msg);
